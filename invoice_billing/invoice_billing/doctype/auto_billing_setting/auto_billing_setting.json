@@ -1,0 +1,77 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-06-26 17:47:51.469477",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "notfiy_invoices_section",
+  "enable_notifications",
+  "day_before_invoice",
+  "email_subject",
+  "global_users"
+ ],
+ "fields": [
+  {
+   "fieldname": "notfiy_invoices_section",
+   "fieldtype": "Section Break",
+   "label": "Notfiy Invoices"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_notifications",
+   "fieldtype": "Check",
+   "label": "Enable Notifications"
+  },
+  {
+   "depends_on": "enable_notifications",
+   "description": "How many days before the invoice date to notify the users.",
+   "fieldname": "day_before_invoice",
+   "fieldtype": "Int",
+   "label": "Day Before Invoice",
+   "non_negative": 1
+  },
+  {
+   "default": "Upcoming Customer Invoices",
+   "depends_on": "enable_notifications",
+   "fieldname": "email_subject",
+   "fieldtype": "Data",
+   "label": "Email Subject"
+  },
+  {
+   "depends_on": "enable_notifications",
+   "description": "These users are notified about every upcoming invoice (in addition to each customer's own notify users).",
+   "fieldname": "global_users",
+   "fieldtype": "Table",
+   "label": "Global Users",
+   "options": "Email Log User"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-06-26 17:49:30.557126",
+ "modified_by": "Administrator",
+ "module": "Invoice Billing",
+ "name": "Auto Billing Setting",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

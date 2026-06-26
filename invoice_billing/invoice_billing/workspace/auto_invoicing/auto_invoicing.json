@@ -1,0 +1,219 @@
+{
+ "charts": [
+  {
+   "chart_name": "Invoice Forecast (Monthly)",
+   "label": "Invoice Forecast (Monthly)"
+  },
+  {
+   "chart_name": "Auto Invoice Value (Monthly)",
+   "label": "Auto Invoice Value (Monthly)"
+  },
+  {
+   "chart_name": "Upcoming vs Invoiced",
+   "label": "Upcoming vs Invoiced"
+  }
+ ],
+ "content": "[{\"id\": \"hdr1\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Auto Invoicing</b></span>\", \"col\": 12}}, {\"id\": \"ovbl\", \"type\": \"custom_block\", \"data\": {\"custom_block_name\": \"auto-invoicing-overview\", \"col\": 12}}, {\"id\": \"nchd\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h6\\\">Key Metrics</span>\", \"col\": 12}}, {\"id\": \"nc1\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Auto Invoice Customers\", \"col\": 3}}, {\"id\": \"nc2\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Upcoming Invoices\", \"col\": 3}}, {\"id\": \"nc3\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Auto-Generated Invoices\", \"col\": 3}}, {\"id\": \"nc4\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Billing Notifications Sent\", \"col\": 3}}, {\"id\": \"chhd\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h6\\\">Charts</span>\", \"col\": 12}}, {\"id\": \"ch1\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Invoice Forecast (Monthly)\", \"col\": 12}}, {\"id\": \"ch2\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Auto Invoice Value (Monthly)\", \"col\": 6}}, {\"id\": \"ch3\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Upcoming vs Invoiced\", \"col\": 6}}, {\"id\": \"lkhd\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h6\\\">Reports &amp; Masters</span>\", \"col\": 12}}, {\"id\": \"cd1\", \"type\": \"card\", \"data\": {\"card_name\": \"Reports\", \"col\": 4}}, {\"id\": \"cd2\", \"type\": \"card\", \"data\": {\"card_name\": \"Masters\", \"col\": 4}}, {\"id\": \"cd3\", \"type\": \"card\", \"data\": {\"card_name\": \"Logs\", \"col\": 4}}, {\"id\": \"schd\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h6\\\">Shortcuts</span>\", \"col\": 12}}, {\"id\": \"sc1\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Customer\", \"col\": 3}}, {\"id\": \"sc2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Sales Invoice\", \"col\": 3}}, {\"id\": \"sc3\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Auto Billing Setting\", \"col\": 3}}, {\"id\": \"sc4\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Email Log\", \"col\": 3}}]",
+ "creation": "2026-06-26 18:43:31.460684",
+ "custom_blocks": [
+  {
+   "custom_block_name": "auto-invoicing-overview",
+   "label": "Overview"
+  }
+ ],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "file-large",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Auto Invoicing",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Reports",
+   "link_count": 5,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Upcoming Invoices",
+   "link_count": 0,
+   "link_to": "Upcoming Invoices",
+   "link_type": "Report",
+   "onboard": 0,
+   "report_ref_doctype": "Customer Invoices",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Invoice Forecast",
+   "link_count": 0,
+   "link_to": "Invoice Forecast",
+   "link_type": "Report",
+   "onboard": 0,
+   "report_ref_doctype": "Customer Invoices",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Customer Billing Summary",
+   "link_count": 0,
+   "link_to": "Customer Billing Summary",
+   "link_type": "Report",
+   "onboard": 0,
+   "report_ref_doctype": "Customer",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Auto Generated Invoices",
+   "link_count": 0,
+   "link_to": "Auto Generated Invoices",
+   "link_type": "Report",
+   "onboard": 0,
+   "report_ref_doctype": "Sales Invoice",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Billing Notifications Log",
+   "link_count": 0,
+   "link_to": "Billing Notifications Log",
+   "link_type": "Report",
+   "onboard": 0,
+   "report_ref_doctype": "Customer Auto Billing Email Log",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Masters",
+   "link_count": 2,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Customers",
+   "link_count": 0,
+   "link_to": "Customer",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Auto Billing Setting",
+   "link_count": 0,
+   "link_to": "Auto Billing Setting",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Logs",
+   "link_count": 2,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Generated Invoices",
+   "link_count": 0,
+   "link_to": "Sales Invoice",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Email Log",
+   "link_count": 0,
+   "link_to": "Customer Auto Billing Email Log",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-06-26 18:58:49.475394",
+ "modified_by": "Administrator",
+ "module": "Invoice Billing",
+ "name": "Auto Invoicing",
+ "number_cards": [
+  {
+   "label": "Auto Invoice Customers",
+   "number_card_name": "Auto Invoice Customers"
+  },
+  {
+   "label": "Upcoming Invoices",
+   "number_card_name": "Upcoming Invoices"
+  },
+  {
+   "label": "Auto-Generated Invoices",
+   "number_card_name": "Auto-Generated Invoices"
+  },
+  {
+   "label": "Billing Notifications Sent",
+   "number_card_name": "Billing Notifications Sent"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 2.0,
+ "shortcuts": [
+  {
+   "color": "Green",
+   "doc_view": "List",
+   "label": "Customer",
+   "link_to": "Customer",
+   "stats_filter": "[[\"Customer\",\"custom_enabled_auto_invoice\",\"=\",1,false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "label": "Sales Invoice",
+   "link_to": "Sales Invoice",
+   "stats_filter": "[[\"Sales Invoice\",\"custom_auto_invoice_row_name\",\"is\",\"set\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "",
+   "label": "Auto Billing Setting",
+   "link_to": "Auto Billing Setting",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "label": "Email Log",
+   "link_to": "Customer Auto Billing Email Log",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Auto Invoicing"
+}
