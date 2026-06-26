@@ -154,7 +154,11 @@ def _build_sales_invoice(
 
 	company = si.company or _default_company(customer)
 	si.company = company
-	cost_center = _default_cost_center(company)
+
+	# Cost center from the customer if set, otherwise the company default.
+	cost_center = customer.get("custom_cost_center") or _default_cost_center(company)
+	project = customer.get("custom_project")
+	si.project = project
 
 	context = {"customer": customer.name, "invoice_date": invoice_date}
 	for item in customer.get(BILLING_ITEMS_FIELD) or []:
@@ -166,6 +170,7 @@ def _build_sales_invoice(
 				"rate": item.rate,
 				"item_tax_template": item.get("item_tax_template"),
 				"cost_center": cost_center,
+				"project": project,
 				"description": render_billing_description(item.description, context),
 			},
 		)
@@ -193,11 +198,11 @@ def _default_cost_center(company):
 
 @frappe.whitelist()
 def create_next_invoice(customer):
-	"""Generate and submit the Sales Invoice for the next scheduled row.
+	"""Generate a draft Sales Invoice for the next scheduled row.
 
-	Picks the soonest un-invoiced row, creates a submitted Sales Invoice, and
-	marks the row (``invoiced = 1`` + ``invoice_name``). Cancelling the invoice
-	resets the row back to ``invoiced = 0``. Returns the new invoice name.
+	Picks the soonest un-invoiced row, creates a draft Sales Invoice, and marks
+	the row (``invoiced = 1`` + ``invoice_name``). Cancelling or deleting the
+	invoice resets the row back to ``invoiced = 0``. Returns the new invoice name.
 	"""
 	customer_doc = frappe.get_doc("Customer", customer)
 
@@ -208,7 +213,13 @@ def create_next_invoice(customer):
 	if not row:
 		frappe.throw(_("There is no upcoming un-invoiced row to generate."))
 
-	invoice = _make_sales_invoice(customer_doc, row)
+	invoice = _build_sales_invoice(
+		customer_doc,
+		getdate(row.invoice_date),
+		submit=False,
+		ignore_permissions=False,
+		row_name=row.name,
+	)
 	row.invoice_name = invoice.name
 	row.invoiced = 1
 	customer_doc.save(ignore_permissions=True)
@@ -226,10 +237,20 @@ def _next_invoice_row(customer):
 
 
 def on_sales_invoice_cancel(doc, method=None):
-	"""When a Sales Invoice is cancelled, free its row so it can be re-invoiced.
+	"""Free the schedule row when its invoice is cancelled."""
+	_release_invoice_rows(doc)
 
-	Clears ``invoice_name`` and resets ``invoiced`` to 0 on any customer invoice
-	row that points at this invoice.
+
+def on_sales_invoice_trash(doc, method=None):
+	"""Free the schedule row when its (draft) invoice is deleted."""
+	_release_invoice_rows(doc)
+
+
+def _release_invoice_rows(doc):
+	"""Reset any customer invoice row pointing at this invoice.
+
+	Clears ``invoice_name`` and sets ``invoiced`` to 0 so the row can be
+	re-invoiced. Used on both cancel and delete of the Sales Invoice.
 	"""
 	row_names = set(
 		frappe.get_all(INVOICES_DOCTYPE, filters={"invoice_name": doc.name}, pluck="name")
