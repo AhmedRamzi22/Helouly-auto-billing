@@ -155,6 +155,7 @@ doc_events = {
 	},
 	"Sales Invoice": {
 		"on_cancel": "invoice_billing.customer.on_sales_invoice_cancel",
+		"on_trash": "invoice_billing.customer.on_sales_invoice_trash",
 	},
 }
 
