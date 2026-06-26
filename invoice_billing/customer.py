@@ -6,7 +6,7 @@ import datetime
 import frappe
 from dateutil.relativedelta import relativedelta
 from frappe import _
-from frappe.utils import flt, getdate, today
+from frappe.utils import add_days, flt, getdate, today
 
 BILLING_ITEMS_FIELD = "custom_billing_items"
 
@@ -160,7 +160,13 @@ def _build_sales_invoice(
 	project = customer.get("custom_project")
 	si.project = project
 
-	context = {"customer": customer.name, "invoice_date": invoice_date}
+	period_to = _period_end(customer, invoice_date)
+	context = {
+		"customer": customer.name,
+		"invoice_date": invoice_date,
+		"from": invoice_date,
+		"to": period_to,
+	}
 	for item in customer.get(BILLING_ITEMS_FIELD) or []:
 		si.append(
 			"items",
@@ -179,6 +185,25 @@ def _build_sales_invoice(
 	if submit:
 		si.submit()
 	return si
+
+
+def _period_end(customer, invoice_date):
+	"""End of the invoice period: the day before the next invoice date.
+
+	e.g. monthly invoice on 15-07-2026 -> period ends 14-08-2026 (next is
+	15-08-2026). Works for every frequency. Falls back to None if the schedule
+	settings are incomplete.
+	"""
+	months = FREQUENCY_MONTHS.get(customer.get("custom_invoicing_frequency"))
+	invoice_day = customer.get("custom_invoice_day")
+	if not months or not invoice_day:
+		return None
+
+	next_period_start = datetime.date(invoice_date.year, invoice_date.month, 1) + relativedelta(
+		months=months
+	)
+	next_date = _clamp_day(next_period_start, int(invoice_day))
+	return getdate(add_days(next_date, -1))
 
 
 def _default_company(customer):
