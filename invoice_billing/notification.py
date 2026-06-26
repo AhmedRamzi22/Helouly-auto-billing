@@ -156,14 +156,14 @@ def _notify_user(user, customers, day_before, now=False):
 	customer_names = [c["customer"] for c in customers]
 	route = _customer_list_route(customer_names)
 
-	subject = _(
-		"{0} customer(s) will be invoiced in {1} day(s)"
-	).format(count, day_before)
-
 	details_html = _build_email_html(customers, day_before, route)
 
 	email = frappe.db.get_value("User", user, "email") or user
 	email_sent = bool(email)
+
+	subject = _("{0} customer(s) will be invoiced in {1} day(s)").format(count, day_before)
+	if email_sent:
+		subject += " — " + _("details sent to your email")
 	if email_sent:
 		frappe.sendmail(
 			recipients=[email],
