@@ -152,6 +152,10 @@ def _build_sales_invoice(
 	si.posting_date = invoice_date
 	si.custom_auto_invoice_row_name = row_name
 
+	company = si.company or _default_company(customer)
+	si.company = company
+	cost_center = _default_cost_center(company)
+
 	context = {"customer": customer.name, "invoice_date": invoice_date}
 	for item in customer.get(BILLING_ITEMS_FIELD) or []:
 		si.append(
@@ -161,6 +165,7 @@ def _build_sales_invoice(
 				"qty": item.qty,
 				"rate": item.rate,
 				"item_tax_template": item.get("item_tax_template"),
+				"cost_center": cost_center,
 				"description": render_billing_description(item.description, context),
 			},
 		)
@@ -169,6 +174,21 @@ def _build_sales_invoice(
 	if submit:
 		si.submit()
 	return si
+
+
+def _default_company(customer):
+	"""Resolve the company for the invoice."""
+	return (
+		frappe.defaults.get_user_default("Company")
+		or frappe.db.get_single_value("Global Defaults", "default_company")
+	)
+
+
+def _default_cost_center(company):
+	"""Company default cost center, used so valuation/P&L GL entries don't fail."""
+	if not company:
+		return None
+	return frappe.get_cached_value("Company", company, "cost_center")
 
 
 @frappe.whitelist()
